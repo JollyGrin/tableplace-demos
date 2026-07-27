@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://demos.table.place/sitemap.xml

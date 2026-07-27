@@ -11,6 +11,7 @@ Generated from games.json by gen.js — regenerate with `node gen.js`.
 ## Games
 
 - [Ardent Reapers](https://demo.table.place/ardent-reapers/): Paste two deck URLs from ardentreapers.com, get a two-seat duel lobby seeded with both decks. (card game; official site: https://ardentreapers.com)
+- [Cataclysm Arcade](https://demo.table.place/cataclysm-arcade/): Paste two the-cade.com pack or deck links, get a two-seat table with Bosses in play, counters and token piles. (card game; official site: https://cataclysmarcade.com)
 
 ## Create a lobby programmatically
 

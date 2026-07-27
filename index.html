@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tableplace demos — lobby creators</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+    background: #14161f; color: #e8e2d0;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  main { max-width: 46rem; padding: 3rem 1.5rem; }
+  h1 { font-size: 1.4rem; letter-spacing: 0.04em; }
+  p.lede { color: #9aa0b4; line-height: 1.6; }
+  a { color: #7fc8a9; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 1rem; padding: 0; margin: 2rem 0; list-style: none; }
+  .tile {
+    display: block; padding: 1.25rem; border: 1px solid #2c3040; border-radius: 8px;
+    background: #1a1d29; text-decoration: none; color: inherit;
+  }
+  .tile:hover { border-color: #7fc8a9; }
+  .tile h2 { margin: 0 0 0.4rem; font-size: 1.05rem; color: #e8e2d0; }
+  .tile .tier { font-size: 0.75rem; color: #7fc8a9; letter-spacing: 0.08em; }
+  .tile p { margin: 0.6rem 0 0; font-size: 0.85rem; color: #9aa0b4; line-height: 1.5; }
+  footer { font-size: 0.8rem; color: #6b7080; padding-bottom: 2rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>tableplace demos</h1>
+  <p class="lede">
+    One folder per game. Each demo turns a game site's own deck data into a playable
+    <a href="https://table.place">table.place</a> lobby with one POST.
+    View source — the code <em>is</em> the tutorial. API reference:
+    <a href="https://api.table.place/llms.txt">api.table.place/llms.txt</a>.
+  </p>
+  <ul class="tiles">
+    <li>
+      <a class="tile" href="ardent-reapers/">
+        <h2>Ardent Reapers</h2>
+        <span class="tier">TIER A — live deck API, CORS open</span>
+        <p>Paste two deck URLs from ardentreapers.com, get a two-seat duel lobby
+        seeded with both decks.</p>
+      </a>
+    </li>
+  </ul>
+</main>
+<footer>MIT licensed — copy any folder and make it yours.</footer>
+</body>
+</html>

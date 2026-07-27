@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ardent Reapers → table.place</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+    background: #14161f; color: #e8e2d0;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  main { max-width: 44rem; width: 100%; box-sizing: border-box; padding: 3rem 1.5rem; }
+  h1 { font-size: 1.3rem; }
+  a { color: #7fc8a9; }
+  p, label { color: #9aa0b4; line-height: 1.6; }
+  label { display: block; margin: 1.2rem 0 0.3rem; color: #e8e2d0; }
+  input {
+    width: 100%; box-sizing: border-box; padding: 0.6rem 0.8rem;
+    background: #1a1d29; color: #e8e2d0; border: 1px solid #2c3040; border-radius: 6px;
+    font: inherit;
+  }
+  input:focus { outline: none; border-color: #7fc8a9; }
+  button {
+    margin-top: 1.5rem; padding: 0.7rem 1.6rem; font: inherit;
+    background: #7fc8a9; color: #14161f; border: none; border-radius: 6px; cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; cursor: wait; }
+  #status { margin-top: 1.5rem; white-space: pre-wrap; }
+  #status.error { color: #e07a6a; }
+  #links ul { padding-left: 1.2rem; }
+  #links a { word-break: break-all; }
+  .hint { font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ardent Reapers → table.place</h1>
+  <p>
+    Paste a deck link (or bare deck id) from
+    <a href="https://ardentreapers.com/decks" target="_blank" rel="noopener">ardentreapers.com/decks</a>
+    for each seat. The demo fetches both decks from the game's own API, maps them to
+    <a href="https://api.table.place/llms.txt" target="_blank" rel="noopener">table.place packs</a>
+    in <a href="adapter.js">adapter.js</a>, and seeds a two-seat duel lobby.
+    View source — that's the tutorial.
+  </p>
+
+  <form id="form">
+    <label for="deck0">Seat 0 deck</label>
+    <input id="deck0" name="deck0" placeholder="https://ardentreapers.com/decks?deckId=… or a bare uuid" autocomplete="off" required>
+    <label for="deck1">Seat 1 deck</label>
+    <input id="deck1" name="deck1" placeholder="https://ardentreapers.com/decks?deckId=… or a bare uuid" autocomplete="off" required>
+    <button id="go" type="submit">Create lobby</button>
+  </form>
+
+  <p class="hint">
+    Setup ritual (mulligan until two Creatures, opening discards, …) is played out
+    on the table by the players, exactly as at a real one — see the
+    <a href="README.md">README</a>.
+  </p>
+
+  <div id="status"></div>
+  <div id="links"></div>
+</main>
+
+<script type="module">
+  import { seedLobby, renderSeatLinks, SeedError } from '../shared/seed.js';
+  import { deckToPack } from './adapter.js';
+
+  const form = document.getElementById('form');
+  const button = document.getElementById('go');
+  const status = document.getElementById('status');
+  const links = document.getElementById('links');
+
+  // A deck link looks like https://ardentreapers.com/decks?deckId=<uuid>;
+  // accept anything containing a uuid, including the bare uuid itself.
+  function parseDeckId(input) {
+    const m = input.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i);
+    return m ? m[0].toLowerCase() : null;
+  }
+
+  // Their API is rate-limited (200 requests/window) — fetch only on submit,
+  // never per keystroke.
+  async function fetchDeck(deckId) {
+    const res = await fetch(`https://ardentreapers.com/api/decks/full/?deckId=${deckId}`);
+    const data = await res.json().catch(() => null);
+    // Their API reports "Deck not found" as an `error` field inside a 200,
+    // so check the body, not just the status.
+    if (!res.ok || !data || data.error || !Array.isArray(data.cards)) {
+      const why = data && data.error ? data.error : `HTTP ${res.status}`;
+      throw new Error(`ardentreapers.com said: ${why} (deck ${deckId})`);
+    }
+    return data;
+  }
+
+  function say(text, isError = false) {
+    status.textContent = text;
+    status.className = isError ? 'error' : '';
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    links.textContent = '';
+    button.disabled = true;
+    try {
+      const ids = [form.deck0.value, form.deck1.value].map((v, i) => {
+        const id = parseDeckId(v.trim());
+        if (!id) throw new Error(`Seat ${i}: no deck id found in "${v.trim()}" — paste a deck URL or a uuid.`);
+        return id;
+      });
+
+      say('fetching decks from ardentreapers.com…');
+      const decks = await Promise.all(ids.map(fetchDeck));
+      say(`fetched "${decks[0].name}" (${decks[0].cards.length} cards) vs "${decks[1].name}" (${decks[1].cards.length} cards)`);
+
+      const body = {
+        version: 1,
+        layout: 'duel-2p',
+        packs: decks.map((deck, seat) => deckToPack(deck, seat)),
+      };
+
+      const lobby = await seedLobby(body, say);
+      say(`Lobby "${lobby.lobby}" is ready — open both seats:`);
+      renderSeatLinks(links, lobby);
+    } catch (err) {
+      // SeedError messages come from api.table.place's validator, written for
+      // integrators — show them word for word.
+      say(err instanceof SeedError ? `api.table.place said: ${err.message}` : err.message, true);
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

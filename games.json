@@ -15,6 +15,21 @@
         "digital tabletop"
       ],
       "tierNote": "TIER A — live deck API, CORS open"
+    },
+    {
+      "slug": "cataclysm-arcade",
+      "name": "Cataclysm Arcade",
+      "kind": "card game",
+      "tagline": "Paste two the-cade.com pack or deck links, get a two-seat table with Bosses in play, counters and token piles.",
+      "description": "Play the Cataclysm Arcade card game online — free, in your browser, no install. Paste two the-cade.com booster or deck links and get a shared two-player table with the real cards.",
+      "officialSite": "https://cataclysmarcade.com",
+      "ogImage": "/cataclysm-arcade/table.jpg",
+      "searchPhrases": [
+        "play cataclysm arcade online",
+        "cataclysm arcade print and play",
+        "digital tabletop"
+      ],
+      "tierNote": "TIER B — public API, CORS closed: snapshot + proxy"
     }
   ]
 }

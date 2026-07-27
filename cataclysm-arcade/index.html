@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Play Cataclysm Arcade Online — Free Digital Tabletop | table.place demos</title>
+<meta name="description" content="Play the Cataclysm Arcade card game online — free, in your browser, no install. Paste two the-cade.com booster or deck links and get a shared two-player table with the real cards.">
+<link rel="canonical" href="https://demo.table.place/cataclysm-arcade/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta property="og:title" content="Play Cataclysm Arcade Online — Free Digital Tabletop">
+<meta property="og:description" content="Play the Cataclysm Arcade card game online — free, in your browser, no install. Paste two the-cade.com booster or deck links and get a shared two-player table with the real cards.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://demo.table.place/cataclysm-arcade/">
+<meta property="og:image" content="https://demo.table.place/cataclysm-arcade/table.jpg">
+<meta property="og:image:alt" content="A Cataclysm Arcade match in progress on the table.place digital tabletop">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "@id": "https://demo.table.place/cataclysm-arcade/#game",
+      "name": "Cataclysm Arcade",
+      "url": "https://demo.table.place/cataclysm-arcade/",
+      "image": "https://demo.table.place/cataclysm-arcade/table.jpg",
+      "genre": "Card game",
+      "gamePlatform": "Web browser",
+      "playMode": "MultiPlayer",
+      "numberOfPlayers": { "@type": "QuantitativeValue", "minValue": 2, "maxValue": 2 },
+      "isAccessibleForFree": true,
+      "sameAs": "https://cataclysmarcade.com"
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://demo.table.place/cataclysm-arcade/#app",
+      "name": "Cataclysm Arcade lobby creator — table.place demos",
+      "url": "https://demo.table.place/cataclysm-arcade/",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Any (web browser)",
+      "browserRequirements": "Requires JavaScript",
+      "isAccessibleForFree": true,
+      "about": { "@id": "https://demo.table.place/cataclysm-arcade/#game" },
+      "potentialAction": {
+        "@type": "PlayAction",
+        "name": "Create a Cataclysm Arcade lobby",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://demo.table.place/cataclysm-arcade/",
+          "actionPlatform": [
+            "http://schema.org/DesktopWebPlatform",
+            "http://schema.org/MobileWebPlatform"
+          ]
+        }
+      }
+    }
+  ]
+}
+</script>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+    background: #0d0f1d; color: #e6e8f0;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  main { max-width: 44rem; width: 100%; box-sizing: border-box; padding: 3rem 1.5rem; }
+  h1 { font-size: 1.3rem; }
+  h2 { font-size: 1.05rem; margin-top: 2.2rem; }
+  .fine { font-size: 0.85rem; color: #6b7080; margin-top: 2rem; }
+  a { color: #62e6c4; }
+  p, label { color: #9aa0b4; line-height: 1.6; }
+  label { display: block; margin: 1.2rem 0 0.3rem; color: #e6e8f0; }
+  input {
+    width: 100%; box-sizing: border-box; padding: 0.6rem 0.8rem;
+    background: #151830; color: #e6e8f0; border: 1px solid #2a2e4a; border-radius: 6px;
+    font: inherit;
+  }
+  input:focus { outline: none; border-color: #62e6c4; }
+  button {
+    margin-top: 1.5rem; padding: 0.7rem 1.6rem; font: inherit;
+    background: #62e6c4; color: #0d0f1d; border: none; border-radius: 6px; cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; cursor: wait; }
+  #status { margin-top: 1.5rem; white-space: pre-wrap; }
+  #status.error { color: #e07a6a; }
+  #links ul { padding-left: 1.2rem; }
+  #links a { word-break: break-all; }
+  .hint { font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Play Cataclysm Arcade online</h1>
+  <p>
+    Play the <strong>Cataclysm Arcade</strong> card game online —
+    <strong>free, in your browser, no install</strong>, no account. Pick a booster
+    pack or constructed deck from
+    <a href="https://the-cade.com" target="_blank" rel="noopener">the-cade.com</a>
+    for each player, create a lobby, and you and your opponent share a
+    two-player table on <a href="https://table.place">table.place</a>, a digital
+    tabletop: each Boss starts in play with its health counter, decks, discards,
+    coin and level counters and token piles are dealt, and you play the real
+    cards yourselves, exactly as you would across a real table.
+  </p>
+  <p>
+    Looking for a Cataclysm Arcade print and play? Skip the printer — the pack
+    you would sleeve at home is on the table in one click, with the community's
+    own card scans.
+  </p>
+
+  <h2>Create a table</h2>
+  <p>
+    Paste a pack or deck link (or a bare uuid) from
+    <a href="https://the-cade.com" target="_blank" rel="noopener">the-cade.com</a>
+    for each seat — <code>#/pack/…</code> and <code>#/deck/…</code> links both
+    work — then send one seat link to your opponent.
+  </p>
+
+  <form id="form">
+    <label for="seat0">Seat 0 pack or deck</label>
+    <input id="seat0" name="seat0" placeholder="https://the-cade.com/#/pack/… or a bare uuid" autocomplete="off" required>
+    <label for="seat1">Seat 1 pack or deck</label>
+    <input id="seat1" name="seat1" placeholder="https://the-cade.com/#/deck/… or a bare uuid" autocomplete="off" required>
+    <button id="go" type="submit">Create lobby</button>
+  </form>
+
+  <p class="hint">
+    Draw your opening hand of 4 at the table; the fighter row is the felt in
+    front of your Boss. Coins and Level start at 1, and the shared bags deal
+    damage and +1 Attack counters — see the <a href="README.md">README</a> for
+    what the demo leaves to the players.
+  </p>
+
+  <div id="status"></div>
+  <div id="links"></div>
+
+  <p class="fine">
+    Cataclysm Arcade, its card data and art belong to Mothership Games — this is
+    an unaffiliated community table built on
+    <a href="https://the-cade.com" target="_blank" rel="noopener">the-cade.com</a>,
+    itself an unofficial fan tool. Find the game and how to play at
+    <a href="https://cataclysmarcade.com" target="_blank" rel="noopener">cataclysmarcade.com</a>.
+  </p>
+  <p class="fine">
+    Game-site owners: this page is a copy-pasteable demo — no framework, no
+    build step, view source is the tutorial. <a href="adapter.js">adapter.js</a>
+    maps the pack/deck JSON to
+    <a href="https://api.table.place/llms.txt" target="_blank" rel="noopener">table.place packs</a>;
+    copy the folder and swap in your own data. Notes in the <a href="README.md">README</a>.
+  </p>
+</main>
+
+<script type="module">
+  import { seedLobby, renderSeatLinks, SeedError } from '../shared/seed.js';
+  import { indexCards, toLobbyBody, isBooster } from './adapter.js';
+
+  const form = document.getElementById('form');
+  const button = document.getElementById('go');
+  const status = document.getElementById('status');
+  const links = document.getElementById('links');
+
+  // the-cade.com's API is public but its CORS is pinned to its own origin, so
+  // a browser on this page cannot read it directly (Tier B — see README). The
+  // demo routes the two fetches through the same public CORS proxy the
+  // table.place client already uses for sheet images. On the-cade's own
+  // origin, this indirection disappears.
+  const PROXY = 'https://corsproxy.innkeeper1.workers.dev/?url=';
+  const proxied = (url) => fetch(PROXY + encodeURIComponent(url));
+
+  // Site URLs are hash-routed (the-cade.com/#/pack/<uuid>); accept anything
+  // containing a uuid, including the bare uuid itself.
+  function parseId(input) {
+    const m = input.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i);
+    return m ? m[0].toLowerCase() : null;
+  }
+
+  // One uuid, two possible homes: try the pack endpoint, fall back to the deck
+  // endpoint. Unknown ids are a JSON 404 ({"error": "Pack not found"}) on
+  // both, and a non-JSON answer (an outage page, the SPA's index.html) must
+  // read as an error too — never as a table with nothing in it.
+  async function fetchSource(id) {
+    const failures = [];
+    for (const kind of ['packs', 'decks']) {
+      const res = await proxied(`https://the-cade.com/api/${kind}/${id}`);
+      const data = await res.json().catch(() => null);
+      if (res.ok && data && !data.error && data.cards) return data;
+      failures.push(`/${kind}/: ${data && data.error ? data.error : data ? 'unexpected response' : `no JSON (HTTP ${res.status})`}`);
+    }
+    throw new Error(`the-cade.com knows no pack or deck "${id}" — ${failures.join('; ')}`);
+  }
+
+  // the vendored snapshot, fetched same-origin once per page
+  let cardsById = null;
+  async function cardDb() {
+    if (cardsById) return cardsById;
+    const res = await fetch('./data/cards.json');
+    if (!res.ok) throw new Error(`could not load the card snapshot (data/cards.json): HTTP ${res.status}`);
+    cardsById = indexCards(await res.json());
+    return cardsById;
+  }
+
+  function say(text, isError = false) {
+    status.textContent = text;
+    status.className = isError ? 'error' : '';
+  }
+
+  const describe = (s) => `"${s.name}" (${isBooster(s) ? `booster, ${s.cards.length} cards` : `deck, ${Object.values(s.cards ?? {}).reduce((a, b) => a + b, 0)} cards`})`;
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    links.textContent = '';
+    button.disabled = true;
+    try {
+      const ids = [form.seat0.value, form.seat1.value].map((value, seat) => {
+        const id = parseId(value.trim());
+        if (!id) throw new Error(`Seat ${seat}: no pack/deck id found in "${value.trim()}" — paste a the-cade.com link or a uuid.`);
+        return id;
+      });
+
+      say('fetching from the-cade.com…');
+      const [db, ...sources] = await Promise.all([cardDb(), ...ids.map(fetchSource)]);
+      say(`fetched ${describe(sources[0])} vs ${describe(sources[1])}`);
+
+      const lobby = await seedLobby(toLobbyBody(sources, db), say);
+      say(`Lobby "${lobby.lobby}" is ready — open both seats:`);
+      renderSeatLinks(links, lobby);
+    } catch (err) {
+      // SeedError messages come from api.table.place's validator, written for
+      // integrators — show them word for word.
+      say(err instanceof SeedError ? `api.table.place said: ${err.message}` : err.message, true);
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

@@ -3,17 +3,60 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ardent Reapers → table.place</title>
-<meta name="description" content="Paste two deck links from ardentreapers.com and get a two-seat table.place duel lobby seeded with both decks. Hand-written demo — view source is the tutorial.">
+<title>Play Ardent Reapers Online — Free Digital Tabletop | table.place demos</title>
+<meta name="description" content="Play the Ardent Reapers card game online — free, in your browser, no install. Paste two deck links and get a shared two-player table with the real cards.">
 <link rel="canonical" href="https://demo.table.place/ardent-reapers/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<meta property="og:title" content="Ardent Reapers → table.place">
-<meta property="og:description" content="Paste two deck links from ardentreapers.com and get a two-seat table.place duel lobby seeded with both decks.">
+<meta property="og:title" content="Play Ardent Reapers Online — Free Digital Tabletop">
+<meta property="og:description" content="Play the Ardent Reapers card game online — free, in your browser, no install. Paste two deck links and get a shared two-player table with the real cards.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://demo.table.place/ardent-reapers/">
 <meta property="og:image" content="https://demo.table.place/ardent-reapers/table.jpg">
-<meta property="og:image:alt" content="An Ardent Reapers duel lobby on table.place, seeded by the demo">
+<meta property="og:image:alt" content="An Ardent Reapers duel in progress on the table.place digital tabletop">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "@id": "https://demo.table.place/ardent-reapers/#game",
+      "name": "Ardent Reapers",
+      "url": "https://demo.table.place/ardent-reapers/",
+      "image": "https://demo.table.place/ardent-reapers/table.jpg",
+      "genre": "Card game",
+      "gamePlatform": "Web browser",
+      "playMode": "MultiPlayer",
+      "numberOfPlayers": { "@type": "QuantitativeValue", "minValue": 2, "maxValue": 2 },
+      "isAccessibleForFree": true,
+      "sameAs": "https://ardentreapers.com"
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://demo.table.place/ardent-reapers/#app",
+      "name": "Ardent Reapers lobby creator — table.place demos",
+      "url": "https://demo.table.place/ardent-reapers/",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Any (web browser)",
+      "browserRequirements": "Requires JavaScript",
+      "isAccessibleForFree": true,
+      "about": { "@id": "https://demo.table.place/ardent-reapers/#game" },
+      "potentialAction": {
+        "@type": "PlayAction",
+        "name": "Create an Ardent Reapers lobby",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://demo.table.place/ardent-reapers/",
+          "actionPlatform": [
+            "http://schema.org/DesktopWebPlatform",
+            "http://schema.org/MobileWebPlatform"
+          ]
+        }
+      }
+    }
+  ]
+}
+</script>
 <style>
   :root { color-scheme: dark; }
   body {
@@ -23,6 +66,8 @@
   }
   main { max-width: 44rem; width: 100%; box-sizing: border-box; padding: 3rem 1.5rem; }
   h1 { font-size: 1.3rem; }
+  h2 { font-size: 1.05rem; margin-top: 2.2rem; }
+  .fine { font-size: 0.85rem; color: #6b7080; margin-top: 2rem; }
   a { color: #7fc8a9; }
   p, label { color: #9aa0b4; line-height: 1.6; }
   label { display: block; margin: 1.2rem 0 0.3rem; color: #e8e2d0; }
@@ -46,14 +91,26 @@
 </head>
 <body>
 <main>
-  <h1>Ardent Reapers → table.place</h1>
+  <h1>Play Ardent Reapers online</h1>
+  <p>
+    Play the <strong>Ardent Reapers</strong> card game online —
+    <strong>free, in your browser, no install</strong>, no account. Pick two decks
+    from <a href="https://ardentreapers.com/decks" target="_blank" rel="noopener">ardentreapers.com/decks</a>,
+    create a lobby, and you and your opponent share a two-player table on
+    <a href="https://table.place">table.place</a>, a digital tabletop: draw, flip,
+    and move the real cards yourselves, exactly as you would across a real table.
+  </p>
+  <p>
+    Looking for an Ardent Reapers print and play? Skip the printer — the same
+    decks you would sleeve at home are on the table in one click, with the
+    game's own card scans.
+  </p>
+
+  <h2>Create a table</h2>
   <p>
     Paste a deck link (or bare deck id) from
     <a href="https://ardentreapers.com/decks" target="_blank" rel="noopener">ardentreapers.com/decks</a>
-    for each seat. The demo fetches both decks from the game's own API, maps them to
-    <a href="https://api.table.place/llms.txt" target="_blank" rel="noopener">table.place packs</a>
-    in <a href="adapter.js">adapter.js</a>, and seeds a two-seat duel lobby.
-    View source — that's the tutorial.
+    for each seat, then send one seat link to your opponent.
   </p>
 
   <form id="form">
@@ -72,6 +129,20 @@
 
   <div id="status"></div>
   <div id="links"></div>
+
+  <p class="fine">
+    Ardent Reapers belongs to its creators — this is an unaffiliated community
+    table, built on the deck data their site already serves. Find the game, its
+    rules, and the deck builder at
+    <a href="https://ardentreapers.com" target="_blank" rel="noopener">ardentreapers.com</a>.
+  </p>
+  <p class="fine">
+    Game-site owners: this page is a copy-pasteable demo — no framework, no
+    build step, view source is the tutorial. <a href="adapter.js">adapter.js</a>
+    maps the deck JSON to
+    <a href="https://api.table.place/llms.txt" target="_blank" rel="noopener">table.place packs</a>;
+    copy the folder and swap in your own data. Notes in the <a href="README.md">README</a>.
+  </p>
 </main>
 
 <script type="module">

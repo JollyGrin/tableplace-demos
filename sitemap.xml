@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Hand-maintained: add one <url> per demo folder. -->
+<!-- Generated from games.json by gen.js — do not hand-edit. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://demo.table.place/</loc>
-  </url>
-  <url>
-    <loc>https://demo.table.place/ardent-reapers/</loc>
-  </url>
+  <url><loc>https://demo.table.place/</loc></url>
+  <url><loc>https://demo.table.place/ardent-reapers/</loc></url>
 </urlset>

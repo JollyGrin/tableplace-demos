@@ -1,0 +1,24 @@
+# table.place demos
+
+> Free browser demos of tabletop games. Each page below is both a
+> "play X online" landing page and a working lobby creator: it turns the
+> game site's own deck data into a live multiplayer table on
+> https://table.place. No install, no account, no framework, no build
+> step — MIT licensed, view source is the tutorial.
+
+Generated from games.json by gen.js — regenerate with `node gen.js`.
+
+## Games
+
+- [Ardent Reapers](https://demo.table.place/ardent-reapers/): Paste two deck URLs from ardentreapers.com, get a two-seat duel lobby seeded with both decks. (card game; official site: https://ardentreapers.com)
+
+## Create a lobby programmatically
+
+Lobbies are seeded with one POST to the CORS-open, keyless public API:
+
+- https://api.table.place/llms.txt — canonical lobby API reference, self-contained; written so an LLM can emit a valid pack from it
+- https://table.place/llms.txt — the table.place client and pack/scenario format
+
+## Source
+
+- https://github.com/JollyGrin/tableplace-demos — this gallery, one self-contained folder per game

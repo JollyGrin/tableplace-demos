@@ -1,0 +1,15 @@
+name: manifest-parity
+# games.json is the single source of truth; sitemap.xml, llms.txt, the gallery
+# tiles, and every landing page must agree with it. `node gen.js --check`
+# exits 1 on any drift. This is a check only — nothing is built for serving.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node gen.js --check

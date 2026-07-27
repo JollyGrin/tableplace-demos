@@ -50,14 +50,26 @@ from it. Demos link to it and never restate it; restated docs drift.
 ## Layout
 
 ```
-index.html              # the gallery: one tile per game
+games.json              # THE manifest: one entry per game (slug, name, SEO copy…)
+gen.js                  # regenerates sitemap.xml, llms.txt, gallery tiles from it
+index.html              # the gallery: one tile per game (tiles are generated)
+llms.txt                # agent-facing index of the games (generated)
+sitemap.xml             # generated
 shared/seed.js          # validate → POST /v1/lobbies → seat links
 <game-name>/
-  index.html            # the lobby creator UI
+  index.html            # "Play X online" landing page + the lobby creator UI
   adapter.js            # game data → pack + scenario
   data/                 # snapshot(s) with provenance (Tier B/C only)
   README.md             # data tier + "do this on your own site" notes
 ```
+
+**Adding a game** = add its folder + a `games.json` entry, run `node gen.js`,
+commit the output. Not a build step — the generated files are committed and
+served as-is; `node gen.js --check` runs in CI and fails the PR if the
+manifest and the derived files (or a landing page's title/meta/JSON-LD)
+disagree. Each game's `index.html` is a player-facing landing page — title
+"Play {name} Online …", JSON-LD, an attribution line linking the official
+site — with the working demo form on the same page.
 
 ## For game-site owners
 

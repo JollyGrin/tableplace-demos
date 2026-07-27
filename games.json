@@ -1,0 +1,20 @@
+{
+  "baseUrl": "https://demo.table.place",
+  "games": [
+    {
+      "slug": "ardent-reapers",
+      "name": "Ardent Reapers",
+      "kind": "card game",
+      "tagline": "Paste two deck URLs from ardentreapers.com, get a two-seat duel lobby seeded with both decks.",
+      "description": "Play the Ardent Reapers card game online — free, in your browser, no install. Paste two deck links and get a shared two-player table with the real cards.",
+      "officialSite": "https://ardentreapers.com",
+      "ogImage": "/ardent-reapers/table.jpg",
+      "searchPhrases": [
+        "play ardent reapers online",
+        "ardent reapers print and play",
+        "digital tabletop"
+      ],
+      "tierNote": "TIER A — live deck API, CORS open"
+    }
+  ]
+}

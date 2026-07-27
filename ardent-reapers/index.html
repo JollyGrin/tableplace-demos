@@ -82,6 +82,12 @@
     background: #7fc8a9; color: #14161f; border: none; border-radius: 6px; cursor: pointer;
   }
   button:disabled { opacity: 0.5; cursor: wait; }
+  .form-buttons { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+  #random {
+    background: transparent; color: #9aa0b4; border: 1px solid #2c3040;
+  }
+  #random:disabled { opacity: 0.4; cursor: not-allowed; }
+  #random[hidden] { display: none; }
   #status { margin-top: 1.5rem; white-space: pre-wrap; }
   #status.error { color: #e07a6a; }
   #links ul { padding-left: 1.2rem; }
@@ -113,12 +119,20 @@
     for each seat, then send one seat link to your opponent.
   </p>
 
+  <p class="hint">
+    No decks handy? <strong>Random decks</strong> drops in two community decks
+    from ardentreapers.com so you can try a table right away.
+  </p>
+
   <form id="form">
     <label for="deck0">Seat 0 deck</label>
     <input id="deck0" name="deck0" placeholder="https://ardentreapers.com/decks?deckId=… or a bare uuid" autocomplete="off" required>
     <label for="deck1">Seat 1 deck</label>
     <input id="deck1" name="deck1" placeholder="https://ardentreapers.com/decks?deckId=… or a bare uuid" autocomplete="off" required>
-    <button id="go" type="submit">Create lobby</button>
+    <div class="form-buttons">
+      <button id="go" type="submit">Create lobby</button>
+      <button id="random" type="button" aria-label="Fill both seats with random decks">Random decks</button>
+    </div>
   </form>
 
   <p class="hint">
@@ -148,11 +162,31 @@
 <script type="module">
   import { seedLobby, renderSeatLinks, SeedError } from '../shared/seed.js';
   import { deckToPack } from './adapter.js';
+  import { SEED_DECKS } from './seed-decks.js';
 
   const form = document.getElementById('form');
   const button = document.getElementById('go');
+  const randomButton = document.getElementById('random');
   const status = document.getElementById('status');
   const links = document.getElementById('links');
+
+  if (SEED_DECKS.length < 2) {
+    randomButton.hidden = true;
+  } else {
+    randomButton.addEventListener('click', () => {
+      // Sample two distinct decks without replacement — Fisher-Yates on a
+      // copy of the list, take the first two.
+      const pool = SEED_DECKS.slice();
+      for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      const [a, b] = pool;
+      form.deck0.value = `https://ardentreapers.com/deck/${a.id}`;
+      form.deck1.value = `https://ardentreapers.com/deck/${b.id}`;
+      say(`random: "${a.name}" vs "${b.name}"`);
+    });
+  }
 
   // A deck link looks like https://ardentreapers.com/decks?deckId=<uuid>;
   // accept anything containing a uuid, including the bare uuid itself.

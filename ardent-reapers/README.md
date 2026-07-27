@@ -78,6 +78,40 @@ server-side: point each card's `face` at them as plain URLs (CORS-readable
 and hotlinkable, see § 5 of the API doc), point `back` at your real card
 back, and delete `cards.js` and the `sheet:` wrapper entirely.
 
+## The "Random decks" button
+
+Finding two decks on ardentreapers.com and pasting both links back is a hard
+bounce for someone who just wants to see what a table.place table looks like.
+The **Random decks** button next to *Create lobby* skips that: it picks two
+distinct entries from [`seed-decks.js`](seed-decks.js) and writes their
+canonical `https://ardentreapers.com/deck/<id>` URLs into both seat inputs —
+same shape `parseDeckId` already accepts, no parser change needed.
+
+It does **no network request** — the names and ids are static, baked into
+`seed-decks.js` ahead of time. The deck fetch still only happens on submit,
+same as any hand-pasted link, preserving the rate-limit discipline above (their
+API allows 200 requests/window). If `seed-decks.js` ever has fewer than two
+entries the button hides itself rather than risk seating the same deck twice.
+
+`seed-decks.js` is yours to replace — it's just a curated list, not fetched
+from anywhere:
+
+```js
+export const SEED_DECKS = [
+  { id: '<uuid from ardentreapers.com/decks>', name: '<the deck API\'s own `name` field>' },
+  // …
+];
+```
+
+To add an entry:
+
+1. Paste a deck id from [ardentreapers.com/decks](https://ardentreapers.com/decks).
+2. Set `name` to that deck's own `name` field —
+   `GET https://ardentreapers.com/api/decks/full/?deckId=<id>`.
+3. **Check the deck's card ids appear in [`cards.js`](cards.js)** — if they
+   don't, that deck's faces render as generated text cards instead of the real
+   scans (see "Card faces" above).
+
 ## What the demo deliberately does not do
 
 - **No setup automation.** Ardent Reapers setup (discard from the top until

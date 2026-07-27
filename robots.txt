@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://demos.table.place/sitemap.xml
+Sitemap: https://demo.table.place/sitemap.xml

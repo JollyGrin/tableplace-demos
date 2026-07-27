@@ -2,9 +2,9 @@
 <!-- Hand-maintained: add one <url> per demo folder. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://demos.table.place/</loc>
+    <loc>https://demo.table.place/</loc>
   </url>
   <url>
-    <loc>https://demos.table.place/ardent-reapers/</loc>
+    <loc>https://demo.table.place/ardent-reapers/</loc>
   </url>
 </urlset>
